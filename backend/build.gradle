@@ -28,6 +28,18 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+	// Spring Security 기본 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // JWT (JSON Web Token) 발급 및 검증용 라이브러리 세트
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    // 데이터 유효성 검사 (Validation) 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // OAuth 2.0 클라이언트 라이브러리 (구글, 카카오 등 소셜 로그인용)
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    // 이메일 인증 라이브러리 추가
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
