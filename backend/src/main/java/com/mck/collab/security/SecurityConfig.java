@@ -13,6 +13,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.mck.collab.auth.oauth2.CustomOAuth2UserService;
+import com.mck.collab.auth.oauth2.OAuth2LoginFailureHandler;
+import com.mck.collab.auth.oauth2.OAuth2SuccessHandler;
+
 import lombok.RequiredArgsConstructor;
 
 @Configuration

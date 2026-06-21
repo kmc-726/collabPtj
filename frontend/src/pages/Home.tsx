@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/api';
+import SideBar from './SideBar';
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -9,12 +10,12 @@ const Home: React.FC = () => {
 
     const handleLogout = async () => {
         try {
-            // 1. 백엔드에 토큰 삭제 요청
+            // 백엔드에 토큰 삭제 요청
             await api.post('/api/auth/logout');
         } catch (error) {
             console.error('로그아웃 서버 통신 에러:', error);
         } finally {
-            // 2. 서버 통신 성공 여부와 관계없이 브라우저 토큰은 무조건 삭제!
+            // 서버 통신 성공 여부와 관계없이 브라우저 토큰은 무조건 삭제!
             localStorage.removeItem('accessToken');
             localStorage.removeItem('userId'); // userId도 저장했다면 함께 삭제
             
@@ -25,6 +26,7 @@ const Home: React.FC = () => {
 
     return (
         <div style={{ textAlign: 'center', marginTop: '100px' }}>
+            <SideBar />
             <h1>협업 플랫폼 메인 대시보드 🚀</h1>
             
             {accessToken ? (

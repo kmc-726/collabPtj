@@ -3,8 +3,9 @@ package com.mck.collab.security;
 import java.io.IOException;
 import java.util.List;
 
-import com.mck.collab.entity.Member;
-import com.mck.collab.repository.MemberRepository;
+import com.mck.collab.member.entity.Member;
+import com.mck.collab.member.repository.MemberRepository;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
