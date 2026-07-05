@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import type { Document } from '../../types';
-import { createDocument, deleteDocument, getMyDocuments, updateDocument, toggleShare, toggleStar } from '../../api/document';
+import { createDocument, deleteDocument, getDocument, getMyDocuments, updateDocument, toggleShare, toggleStar } from '../../api/document';
 import CommentPanel from '../../components/comment/CommentPanel';
 import useDocumentSocket from '../../hooks/useDocumentSocket';
 import styles from './DocumentsPage.module.css';
@@ -79,11 +79,18 @@ const DocumentsPage: React.FC<DocumentsPageProps> = ({ currentUserId, currentNic
   useEffect(() => { loadDocuments(); }, []);
 
   useEffect(() => {
-    if (initialDocId && documents.length > 0) {
-      const doc = documents.find((d) => d.id === initialDocId);
-      if (doc) { selectDocument(doc); onDocOpened?.(); }
+    if (!initialDocId) return;
+    const doc = documents.find((d) => d.id === initialDocId);
+    if (doc) {
+      selectDocument(doc);
+      onDocOpened?.();
+    } else if (!isLoading) {
+      // 내 목록에 없는 문서(타인 공유 문서) → ID로 직접 조회
+      getDocument(initialDocId)
+        .then((fetched) => { selectDocument(fetched as any); onDocOpened?.(); })
+        .catch(console.error);
     }
-  }, [initialDocId, documents]);
+  }, [initialDocId, documents, isLoading]);
 
   const selectDocument = (doc: Document) => {
     if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
@@ -214,6 +221,8 @@ const DocumentsPage: React.FC<DocumentsPageProps> = ({ currentUserId, currentNic
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isCreating, newTitle, newContent, newTags]);
 
+  const isOwner = !selectedDocument || (selectedDocument as any).ownerUserId === currentUserId;
+
   const saveStatusColor =
     saveStatus === 'saved'   ? 'var(--color-text-success)' :
     saveStatus === 'saving'  ? 'var(--color-text-tertiary)' :
@@ -336,33 +345,42 @@ const DocumentsPage: React.FC<DocumentsPageProps> = ({ currentUserId, currentNic
                 </div>
               </div>
               <div className={styles.toolbarRight}>
+                {!isOwner && (
+                  <span className={styles.readOnlyBadge}>
+                    <i className="ti ti-eye" aria-hidden="true" /> 읽기 전용
+                  </span>
+                )}
                 <button className={styles.newDocBtn} onClick={openCreateMode}>
                   <i className="ti ti-plus" aria-hidden="true" /> 새 문서
                 </button>
-                <button
-                  className={`${styles.starBtn} ${isStarred ? styles.starActive : ''}`}
-                  onClick={handleToggleStar}
-                  title={isStarred ? '즐겨찾기 해제' : '즐겨찾기 추가'}
-                >
-                  <i className={`ti ${isStarred ? 'tif' : ''} ti-star`} aria-hidden="true" />
-                  {isStarred ? '즐겨찾기됨' : '즐겨찾기'}
-                </button>
-                <button className={styles.saveBtn} onClick={handleManualSave} disabled={saveStatus === 'saving'}>
-                  <i className="ti ti-device-floppy" aria-hidden="true" /> 저장 (Ctrl+S)
-                </button>
-                <button
-                  className={`${styles.shareBtn} ${isShared ? styles.shareActive : ''}`}
-                  onClick={handleToggleShare}
-                  title={isShared ? '공유 중 (클릭하여 비공개)' : '비공개 (클릭하여 공유)'}
-                >
-                  <i className={`ti ${isShared ? 'ti-lock-open' : 'ti-share'}`} aria-hidden="true" />
-                  {isShared ? '공유 중' : '공유'}
-                </button>
+                {isOwner && (
+                  <>
+                    <button
+                      className={`${styles.starBtn} ${isStarred ? styles.starActive : ''}`}
+                      onClick={handleToggleStar}
+                      title={isStarred ? '즐겨찾기 해제' : '즐겨찾기 추가'}
+                    >
+                      <i className={`ti ${isStarred ? 'tif' : ''} ti-star`} aria-hidden="true" />
+                      {isStarred ? '즐겨찾기됨' : '즐겨찾기'}
+                    </button>
+                    <button className={styles.saveBtn} onClick={handleManualSave} disabled={saveStatus === 'saving'}>
+                      <i className="ti ti-device-floppy" aria-hidden="true" /> 저장 (Ctrl+S)
+                    </button>
+                    <button
+                      className={`${styles.shareBtn} ${isShared ? styles.shareActive : ''}`}
+                      onClick={handleToggleShare}
+                      title={isShared ? '공유 중 (클릭하여 비공개)' : '비공개 (클릭하여 공유)'}
+                    >
+                      <i className={`ti ${isShared ? 'ti-lock-open' : 'ti-share'}`} aria-hidden="true" />
+                      {isShared ? '공유 중' : '공유'}
+                    </button>
+                    <button className={styles.deleteBtn} onClick={handleDelete}>
+                      <i className="ti ti-trash" aria-hidden="true" /> 삭제
+                    </button>
+                  </>
+                )}
                 <button className={`${styles.commentBtn} ${showComments ? styles.active : ''}`} onClick={() => setShowComments((v) => !v)}>
                   <i className="ti ti-message" aria-hidden="true" /> 댓글
-                </button>
-                <button className={styles.deleteBtn} onClick={handleDelete}>
-                  <i className="ti ti-trash" aria-hidden="true" /> 삭제
                 </button>
               </div>
             </div>
@@ -370,11 +388,11 @@ const DocumentsPage: React.FC<DocumentsPageProps> = ({ currentUserId, currentNic
             <div className={styles.editorBody}>
               <div className={styles.editorMain}>
                 <div className={styles.editorTop}>
-                  <input className={styles.titleInput} value={title} onChange={handleTitleChange} placeholder="제목 없는 문서" />
-                  <input className={styles.tagsInput} value={tags} onChange={handleTagsChange} placeholder="태그 입력 (예: 기획, 회의록)" />
+                  <input className={styles.titleInput} value={title} onChange={isOwner ? handleTitleChange : undefined} readOnly={!isOwner} placeholder="제목 없는 문서" />
+                  <input className={styles.tagsInput} value={tags} onChange={isOwner ? handleTagsChange : undefined} readOnly={!isOwner} placeholder="태그 입력 (예: 기획, 회의록)" />
                   <div className={styles.divider} />
                 </div>
-                <textarea className={styles.contentTextarea} value={content} onChange={handleContentChange} placeholder="내용을 입력하세요..." />
+                <textarea className={styles.contentTextarea} value={content} onChange={isOwner ? handleContentChange : undefined} readOnly={!isOwner} placeholder="내용을 입력하세요..." />
               </div>
               {showComments && (
                 <div className={styles.commentPanel}>

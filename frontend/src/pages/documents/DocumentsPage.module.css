@@ -313,6 +313,18 @@
   color: #f59e0b;
 }
 
+.readOnlyBadge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  border: 1px solid var(--color-border-info);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .saveBtn {
   font-size: 12px;
   padding: 5px 12px;
