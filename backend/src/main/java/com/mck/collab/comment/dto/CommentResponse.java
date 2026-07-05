@@ -10,6 +10,7 @@ import lombok.Getter;
 public class CommentResponse {
 
     private final Long id;
+    private final Long parentId;
     private final String documentId;
     private final String blockId;
     private final String content;
@@ -20,6 +21,7 @@ public class CommentResponse {
 
     public CommentResponse(AppComment comment) {
         this.id = comment.getId();
+        this.parentId = comment.getParentId();
         this.documentId = comment.getDocument().getId();
         this.blockId = comment.getBlockId();
         this.content = comment.getContent();

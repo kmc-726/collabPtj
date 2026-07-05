@@ -42,19 +42,36 @@ public class CommentService {
                 .writer(writer)
                 .blockId(request.getBlockId())
                 .content(request.getContent())
+                .parentId(request.getParentId())
                 .build();
 
         commentRepository.save(comment);
 
-        // ✅ 문서 작성자에게 알림 (자기 자신 제외)
         Member docOwner = document.getOwner();
-        if (!docOwner.getUserId().equals(userId)) {
-            notificationService.createNotification(
-                docOwner,
-                NotificationType.COMMENT_ON_MY_DOCUMENT,
-                writer.getNickname() + "님이 '" + document.getTitle() + "' 문서에 댓글을 달았어요.",
-                document.getId()
-            );
+
+        if (request.getParentId() != null) {
+            // 대댓글: 부모 댓글 작성자에게 알림 (자기 자신 제외)
+            commentRepository.findById(request.getParentId()).ifPresent(parent -> {
+                Member parentWriter = parent.getWriter();
+                if (!parentWriter.getUserId().equals(userId)) {
+                    notificationService.createNotification(
+                        parentWriter,
+                        NotificationType.COMMENT_ON_MY_DOCUMENT,
+                        writer.getNickname() + "님이 댓글에 답글을 달았어요.",
+                        document.getId()
+                    );
+                }
+            });
+        } else {
+            // 일반 댓글: 문서 작성자에게 알림 (자기 자신 제외)
+            if (!docOwner.getUserId().equals(userId)) {
+                notificationService.createNotification(
+                    docOwner,
+                    NotificationType.COMMENT_ON_MY_DOCUMENT,
+                    writer.getNickname() + "님이 '" + document.getTitle() + "' 문서에 댓글을 달았어요.",
+                    document.getId()
+                );
+            }
         }
 
         return new CommentResponse(comment);

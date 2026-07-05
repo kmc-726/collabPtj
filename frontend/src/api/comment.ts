@@ -2,6 +2,7 @@ import api from './axiosInstance';
 
 export interface CommentResponse {
   id: number;
+  parentId: number | null;
   documentId: string;
   blockId: string;
   content: string;
@@ -14,7 +15,7 @@ export interface CommentResponse {
 export const getComments = (documentId: string): Promise<CommentResponse[]> =>
   api.get('/comments', { params: { documentId } }).then((r) => r.data);
 
-export const createComment = (data: { documentId: string; blockId: string; content: string }): Promise<CommentResponse> =>
+export const createComment = (data: { documentId: string; blockId: string; content: string; parentId?: number }): Promise<CommentResponse> =>
   api.post('/comments', data).then((r) => r.data);
 
 export const resolveComment = (id: number): Promise<CommentResponse> =>

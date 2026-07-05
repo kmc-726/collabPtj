@@ -396,7 +396,7 @@ const DocumentsPage: React.FC<DocumentsPageProps> = ({ currentUserId, currentNic
               </div>
               {showComments && (
                 <div className={styles.commentPanel}>
-                  <CommentPanel documentId={selectedDocument.id} currentUserId={currentUserId} />
+                  <CommentPanel documentId={selectedDocument.id} currentUserId={currentUserId} isDocumentOwner={isOwner} />
                 </div>
               )}
             </div>

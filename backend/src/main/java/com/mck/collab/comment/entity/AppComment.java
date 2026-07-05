@@ -48,6 +48,9 @@ public class AppComment {
     @Column(nullable = false, length = 2000)
     private String content;
 
+    @Column(name = "PARENT_ID")
+    private Long parentId;
+
     @Column(name = "IS_RESOLVED", nullable = false, length = 1)
     @Builder.Default
     private String isResolved = "N";
