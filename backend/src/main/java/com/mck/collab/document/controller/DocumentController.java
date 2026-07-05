@@ -31,8 +31,8 @@ public class DocumentController {
     }
 
     @GetMapping("/shared")
-    public ResponseEntity<List<DocumentResponse>> getSharedDocuments() {
-        return ResponseEntity.ok(documentService.getSharedDocuments());
+    public ResponseEntity<List<DocumentResponse>> getSharedDocuments(Authentication auth) {
+        return ResponseEntity.ok(documentService.getSharedDocuments(auth.getName()));
     }
 
     @GetMapping("/snippets")

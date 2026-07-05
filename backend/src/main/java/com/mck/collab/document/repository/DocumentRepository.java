@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.mck.collab.document.entity.Document;
+import com.mck.collab.project.entity.ProjectMember;
 
 public interface DocumentRepository extends JpaRepository<Document, String> {
     List<Document> findByOwnerUserIdOrderByUpdatedAtDesc(String userId);
@@ -19,8 +20,14 @@ public interface DocumentRepository extends JpaRepository<Document, String> {
     
     List<Document> findTop5ByOwnerUserIdOrderByUpdatedAtDesc(String userId);
 
-    // 공유된 문서 목록
-    List<Document> findByIsSharedOrderByUpdatedAtDesc(String isShared);
+    // 공유된 문서 목록 (내가 속한 프로젝트의 문서만)
+    @Query("SELECT d FROM Document d WHERE d.isShared = 'Y' " +
+           "AND d.project IS NOT NULL " +
+           "AND d.project.id IN (" +
+           "  SELECT pm.project.id FROM ProjectMember pm WHERE pm.member.userId = :userId" +
+           ") " +
+           "ORDER BY d.updatedAt DESC")
+    List<Document> findSharedInUserProjects(@Param("userId") String userId);
 
     // 코드 스니펫 (tags에 'code' 포함)
 @Query("SELECT d FROM Document d WHERE d.owner.userId = :userId AND d.tags LIKE '%code%' ORDER BY d.updatedAt DESC")

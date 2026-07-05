@@ -54,9 +54,9 @@ public class DocumentService {
                 .stream().map(DocumentResponse::new).collect(Collectors.toList());
     }
 
-    // 공유된 문서 목록
-    public List<DocumentResponse> getSharedDocuments() {
-        return documentRepository.findByIsSharedOrderByUpdatedAtDesc("Y")
+    // 공유된 문서 목록 (내가 속한 프로젝트 내 공유 문서만)
+    public List<DocumentResponse> getSharedDocuments(String userId) {
+        return documentRepository.findSharedInUserProjects(userId)
                 .stream().map(DocumentResponse::new).collect(Collectors.toList());
     }
 
