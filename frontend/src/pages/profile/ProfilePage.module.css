@@ -1,0 +1,309 @@
+.page {
+  padding: 24px 32px;
+  max-width: 640px;
+  width: 100%;
+}
+
+/* ── 탭 네비게이션 ── */
+.tabNav {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.tabBtn i { font-size: 14px; }
+
+.tabBtn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-background-secondary);
+}
+
+.tabBtn.tabActive {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+  font-weight: 600;
+}
+
+.tabBtn.tabDanger:hover { color: var(--color-text-danger); }
+
+.tabBtn.tabDanger.tabActive {
+  color: var(--color-text-danger);
+  border-bottom-color: var(--color-text-danger);
+}
+
+/* ── 섹션 카드 ── */
+.section {
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dangerSection { border-color: var(--color-border-danger); }
+
+/* ── 아바타 영역 ── */
+.avatarRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+}
+
+.avatarWrapper {
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.avatarImg {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatarInitials {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: #fff;
+  font-size: 18px;
+}
+
+.avatarWrapper:hover .avatarOverlay { opacity: 1; }
+
+.fileInput { display: none; }
+
+.userMeta { flex: 1; }
+
+.userName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.userEmail {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 6px;
+}
+
+.providerBadge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+
+.changePhotoBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-family: inherit;
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.changePhotoBtn:hover { opacity: 0.75; }
+
+/* ── 폼 ── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.readonlyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--radius-sm);
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.input::placeholder { color: var(--color-text-tertiary); }
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── 힌트 / 메시지 ── */
+.hint { font-size: 11px; margin: 2px 0 0; }
+.hintSuccess { color: var(--color-text-success); }
+.hintError   { color: var(--color-text-danger); }
+
+.msgSuccess { font-size: 12px; color: var(--color-text-success); margin: 0; }
+.msgError   { font-size: 12px; color: var(--color-text-danger);  margin: 0; }
+
+/* ── 저장 버튼 ── */
+.submitBtn {
+  padding: 9px 0;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  width: 100%;
+}
+
+.submitBtn:hover:not(:disabled) { background: var(--color-accent-hover); }
+.submitBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── 위험 영역 ── */
+.dangerInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--color-background-danger);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  color: var(--color-text-danger);
+}
+
+.dangerInfo i { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+
+.dangerInfo p {
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.5;
+  color: var(--color-text-danger);
+}
+
+.dangerBtn {
+  background: none;
+  border: 1px solid var(--color-border-danger);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-danger);
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  padding: 9px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.dangerBtn:hover { background: var(--color-background-danger); }
+
+.confirmGroup { display: flex; flex-direction: column; gap: 10px; }
+
+.confirmActions { display: flex; gap: 8px; }
+
+.confirmDeleteBtn {
+  flex: 1;
+  padding: 9px 0;
+  background: var(--color-background-danger);
+  border: 1px solid var(--color-border-danger);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-danger);
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.confirmDeleteBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cancelBtn {
+  flex: 1;
+  padding: 9px 0;
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cancelBtn:hover { background: var(--color-background-tertiary); }

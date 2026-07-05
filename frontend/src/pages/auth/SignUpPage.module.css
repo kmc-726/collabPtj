@@ -1,0 +1,147 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-tertiary);
+  padding: 32px 0;
+}
+
+.card {
+  width: 400px;
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-family: inherit;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 20px;
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--color-text-primary);
+}
+
+.backIcon {
+  font-size: 14px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0 0 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.inputRow {
+  display: flex;
+  gap: 6px;
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputFlex {
+  flex: 1;
+  min-width: 0;
+}
+
+.inlineBtn {
+  white-space: nowrap;
+  padding: 0 12px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.inlineBtn:hover:not(:disabled) {
+  background: var(--color-background-tertiary);
+  border-color: var(--color-border-primary);
+  color: var(--color-text-primary);
+}
+
+.inlineBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hint {
+  font-size: 11px;
+  margin: 4px 0 0;
+}
+
+.hintSuccess { color: var(--color-text-success); }
+.hintError   { color: var(--color-text-danger); }
+
+.errorText {
+  font-size: 12px;
+  color: var(--color-text-danger);
+  margin: 0;
+}
+
+.successText {
+  font-size: 12px;
+  color: var(--color-text-success);
+  margin: 0;
+}
+
+.submitBtn {
+  margin-top: 4px;
+  width: 100%;
+  padding: 9px 0;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

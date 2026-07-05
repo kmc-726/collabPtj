@@ -1,22 +1,13 @@
 package com.mck.collab.document.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.mck.collab.document.dto.DocumentCreateRequest;
 import com.mck.collab.document.dto.DocumentResponse;
-import com.mck.collab.document.dto.DocumentUpdateRequest;
 import com.mck.collab.document.service.DocumentService;
 
 import jakarta.validation.Valid;
@@ -30,48 +21,73 @@ public class DocumentController {
     private final DocumentService documentService;
 
     @PostMapping
-    public ResponseEntity<DocumentResponse> createDocument(
-            Authentication authentication,
-            @Valid @RequestBody DocumentCreateRequest request
-    ) {
-        return ResponseEntity.ok(documentService.createDocument(getUserId(authentication), request));
+    public ResponseEntity<DocumentResponse> create(@Valid @RequestBody DocumentCreateRequest request, Authentication auth) {
+        return ResponseEntity.ok(documentService.createDocument(auth.getName(), request));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<List<DocumentResponse>> getMyDocuments(Authentication auth) {
+        return ResponseEntity.ok(documentService.getMyDocuments(auth.getName()));
+    }
+
+    @GetMapping("/shared")
+    public ResponseEntity<List<DocumentResponse>> getSharedDocuments() {
+        return ResponseEntity.ok(documentService.getSharedDocuments());
+    }
+
+    @GetMapping("/snippets")
+    public ResponseEntity<List<DocumentResponse>> getCodeSnippets(Authentication auth) {
+        return ResponseEntity.ok(documentService.getCodeSnippets(auth.getName()));
+    }
+
+    @GetMapping("/starred")
+    public ResponseEntity<List<DocumentResponse>> getStarred(Authentication auth) {
+        return ResponseEntity.ok(documentService.getStarredDocuments(auth.getName()));
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<DocumentResponse>> getRecent(Authentication auth) {
+        return ResponseEntity.ok(documentService.getRecentDocuments(auth.getName()));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<DocumentResponse>> search(@RequestParam("q") String q, Authentication auth) {
+        return ResponseEntity.ok(documentService.searchDocuments(auth.getName(), q));
+    }
+
+    @GetMapping("/reviews")
+    public ResponseEntity<List<DocumentResponse>> getReviewDocuments(Authentication auth) {
+        return ResponseEntity.ok(documentService.getReviewDocuments(auth.getName()));
     }
 
     @GetMapping
-    public ResponseEntity<List<DocumentResponse>> getMyDocuments(Authentication authentication) {
-        return ResponseEntity.ok(documentService.getMyDocuments(getUserId(authentication)));
+    public ResponseEntity<List<DocumentResponse>> getAllDocuments() {
+        return ResponseEntity.ok(documentService.getAllDocuments());
     }
 
-    @GetMapping("/{documentId}")
-    public ResponseEntity<DocumentResponse> getMyDocument(
-            Authentication authentication,
-            @PathVariable String documentId
-    ) {
-        return ResponseEntity.ok(documentService.getMyDocument(getUserId(authentication), documentId));
+    @GetMapping("/{id}")
+    public ResponseEntity<DocumentResponse> getDocument(@PathVariable("id") String id) {
+        return ResponseEntity.ok(documentService.getDocument(id));
     }
 
-    @PatchMapping("/{documentId}")
-    public ResponseEntity<DocumentResponse> updateDocument(
-            Authentication authentication,
-            @PathVariable String documentId,
-            @Valid @RequestBody DocumentUpdateRequest request
-    ) {
-        return ResponseEntity.ok(documentService.updateDocument(getUserId(authentication), documentId, request));
+    @PutMapping("/{id}")
+    public ResponseEntity<DocumentResponse> update(@PathVariable("id") String id, @Valid @RequestBody DocumentCreateRequest request, Authentication auth) {
+        return ResponseEntity.ok(documentService.updateDocument(id, auth.getName(), request));
     }
 
-    @DeleteMapping("/{documentId}")
-    public ResponseEntity<Map<String, String>> deleteDocument(
-            Authentication authentication,
-            @PathVariable String documentId
-    ) {
-        documentService.deleteDocument(getUserId(authentication), documentId);
-        return ResponseEntity.ok(Map.of("message", "문서가 삭제되었습니다."));
+    @PatchMapping("/{id}/share")
+    public ResponseEntity<DocumentResponse> toggleShare(@PathVariable("id") String id, Authentication auth) {
+        return ResponseEntity.ok(documentService.toggleShare(id, auth.getName()));
     }
 
-    private String getUserId(Authentication authentication) {
-        if (authentication == null || authentication.getName() == null) {
-            throw new IllegalArgumentException("로그인이 필요합니다.");
-        }
-        return authentication.getName();
+    @PatchMapping("/{id}/star")
+    public ResponseEntity<DocumentResponse> toggleStar(@PathVariable("id") String id, Authentication auth) {
+        return ResponseEntity.ok(documentService.toggleStar(id, auth.getName()));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") String id, Authentication auth) {
+        documentService.deleteDocument(id, auth.getName());
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,0 +1,198 @@
+.wrapper {
+  position: relative;
+}
+
+/* ── 벨 버튼 ── */
+.bellBtn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 8px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.bellBtn:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+
+.unreadBadge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+}
+
+/* ── 드롭다운 패널 ── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 340px;
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* ── 드롭다운 헤더 ── */
+.dropdownHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+}
+
+.dropdownTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.markAllBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--color-accent);
+  padding: 3px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.markAllBtn:hover {
+  background: var(--color-background-info);
+}
+
+/* ── 목록 스크롤 영역 ── */
+.list {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+/* ── 알림 항목 ── */
+.notifItem {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  background: transparent;
+  border-bottom: 1px solid var(--color-border-tertiary);
+  align-items: flex-start;
+  transition: background 0.12s;
+}
+
+.notifItem:last-child {
+  border-bottom: none;
+}
+
+.notifItem:hover {
+  background: var(--color-background-secondary);
+}
+
+.notifItem.unread {
+  background: var(--color-background-info);
+}
+
+.notifItem.unread:hover {
+  background: var(--color-background-secondary);
+}
+
+.notifIcon {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.notifContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.notifMessage {
+  font-size: 13px;
+  color: var(--color-text-primary);
+  margin: 0 0 3px;
+  line-height: 1.4;
+}
+
+.notifTime {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.unreadDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 4px;
+  color: var(--color-text-tertiary);
+  font-size: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.deleteBtn:hover {
+  color: var(--color-text-danger);
+  background: var(--color-background-danger);
+}
+
+/* ── 빈 상태 / 로딩 ── */
+.emptyState {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--color-text-tertiary);
+}
+
+.emptyIcon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: 12px;
+  margin: 0;
+}
+
+.loadingText {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  padding: 20px 16px;
+  margin: 0;
+}

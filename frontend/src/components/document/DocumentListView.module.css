@@ -1,0 +1,217 @@
+.page {
+  padding: 28px 40px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0 0 24px;
+}
+
+/* ── 카드 래퍼 ── */
+.card {
+  background: var(--color-background-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-tertiary);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* ── 테이블 헤더 ── */
+.tableHeader {
+  display: grid;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+}
+
+.tableHeaderCell {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── 테이블 행 ── */
+.tableRow {
+  display: grid;
+  gap: 12px;
+  padding: 13px 20px;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-border-tertiary);
+  transition: background 0.12s;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: var(--color-background-secondary);
+}
+
+/* ── 문서 제목 셀 ── */
+.titleCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.docIconWrapper {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+.docInfo {
+  min-width: 0;
+}
+
+.docTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sharedBadge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  margin-top: 2px;
+}
+
+/* ── 수정자/날짜 셀 ── */
+.metaCell {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── 상태 배지 ── */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.statusPublic {
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+}
+
+.statusPrivate {
+  background: var(--color-background-secondary);
+  color: var(--color-text-tertiary);
+}
+
+/* ── 액션 버튼 ── */
+.actionCell {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 6px;
+  border-radius: 6px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  transition: background 0.12s, color 0.12s;
+}
+
+.actionBtn.star {
+  color: var(--color-text-tertiary);
+}
+
+.actionBtn.star.active {
+  color: #f59e0b;
+}
+
+.actionBtn.star:hover {
+  background: var(--color-background-warning);
+  color: #f59e0b;
+}
+
+.actionBtn.share {
+  color: var(--color-text-tertiary);
+}
+
+.actionBtn.share.active {
+  color: var(--color-text-info);
+}
+
+.actionBtn.share:hover {
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+}
+
+/* ── 빈 상태 ── */
+.emptyState {
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--color-text-tertiary);
+}
+
+.emptyIcon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ── 로딩 ── */
+.loadingState {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+}
+
+.loadingIcon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 10px;
+}

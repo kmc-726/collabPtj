@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CollabApplication<collab>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mck.collab.CollabApplication",
+            "projectName": "collab",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

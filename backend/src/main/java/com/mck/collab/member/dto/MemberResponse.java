@@ -1,39 +1,30 @@
 package com.mck.collab.member.dto;
 
-import java.time.LocalDateTime;
-
 import com.mck.collab.member.entity.Member;
-
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 public class MemberResponse {
 
-    private Long id;
-    private String email;
-    private String userId;
-    private String nickname;
-    private String profileImageUrl;
-    private String role;
-    private String provider;
-    private String name;
-    private String phoneNumber;
-    private LocalDateTime createdAt;
+    private final Long id;
+    private final String userId;
+    private final String email;
+    private final String name;
+    private final String nickname;
+    private final String profileImageUrl;
+    private final String phoneNumber;
+    private final String role;
+    private final String provider;
 
-    public static MemberResponse from(Member member) {
-        return MemberResponse.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .userId(member.getUserId())
-                .nickname(member.getNickname())
-                .profileImageUrl(member.getProfileImageUrl())
-                .role(member.getRole())
-                .provider(member.getProvider())
-                .name(member.getName())
-                .phoneNumber(member.getPhoneNumber())
-                .createdAt(member.getCreatedAt())
-                .build();
+    public MemberResponse(Member member) {
+        this.id = member.getId();
+        this.userId = member.getUserId();
+        this.email = member.getEmail();
+        this.name = member.getName();
+        this.nickname = member.getNickname();
+        this.profileImageUrl = member.getProfileImageUrl();
+        this.phoneNumber = member.getPhoneNumber();
+        this.role = member.getRole();
+        this.provider = member.getProvider();
     }
 }

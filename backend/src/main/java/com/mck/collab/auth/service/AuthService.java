@@ -62,11 +62,11 @@ public class AuthService {
 
         String accessToken = jwtProvider.createToken(member.getUserId());
         String refreshToken = jwtProvider.createRefreshToken(member.getUserId());
-        String encodedRefreshToken = passwordEncoder.encode(refreshToken);
 
+        // ✅ Refresh Token은 JWT 자체가 서명된 값이므로 plain text로 저장
         RefreshToken savedToken = refreshTokenRepository.findById(member.getUserId())
-                .orElse(RefreshToken.builder().userId(member.getUserId()).token(encodedRefreshToken).build());
-        savedToken.updateToken(encodedRefreshToken);
+                .orElse(RefreshToken.builder().userId(member.getUserId()).token(refreshToken).build());
+        savedToken.updateToken(refreshToken);
         refreshTokenRepository.save(savedToken);
 
         return new TokenResponse(accessToken, refreshToken);
@@ -83,15 +83,15 @@ public class AuthService {
         RefreshToken savedToken = refreshTokenRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("로그아웃된 사용자입니다."));
 
-        if (!passwordEncoder.matches(refreshToken, savedToken.getToken())) {
+        // ✅ plain text 비교로 변경
+        if (!savedToken.getToken().equals(refreshToken)) {
             throw new IllegalArgumentException("토큰 정보가 일치하지 않습니다.");
         }
 
         String newAccessToken = jwtProvider.createToken(userId);
         String newRefreshToken = jwtProvider.createRefreshToken(userId);
-        String encodedNewRefreshToken = passwordEncoder.encode(newRefreshToken);
 
-        savedToken.updateToken(encodedNewRefreshToken);
+        savedToken.updateToken(newRefreshToken);
 
         return new TokenResponse(newAccessToken, newRefreshToken);
     }

@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +25,7 @@ import lombok.Setter;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GEN")
-    @SequenceGenerator(name = "MEMBER_SEQ_GEN", sequenceName = "SEQ_MEMBER_ID", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true, length = 100)
@@ -42,7 +40,7 @@ public class Member {
     @Column(nullable = false, length = 50)
     private String nickname;
 
-    @Column(name = "PROFILE_IMAGE_URL", length = 500)
+    @Column(name = "PROFILE_IMAGE_URL", columnDefinition = "TEXT")
     private String profileImageUrl;
 
     @Column(nullable = false, length = 20)

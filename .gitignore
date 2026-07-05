@@ -1,1 +1,11 @@
 .idea/
+
+# 환경변수 (절대 커밋 금지)
+.env
+frontend/.env.local
+backend/src/main/resources/application-local.properties
+
+# 빌드 산출물
+backend/build/
+frontend/node_modules/
+frontend/dist/

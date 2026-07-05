@@ -4,8 +4,10 @@ export interface Member {
   email: string;
   nickname: string;
   name: string;
+  phoneNumber?: string;
   profileImageUrl?: string;
   role: string;
+  provider?: string;
 }
 
 export interface Document {

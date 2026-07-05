@@ -1,0 +1,538 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+
+/* ── 문서 목록 사이드바 ── */
+.docSidebar {
+  width: 260px;
+  padding: 20px 12px;
+  border-right: 1px solid var(--color-border-tertiary);
+  background: var(--color-background-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+  margin-bottom: 8px;
+}
+
+.sidebarTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.addBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  font-size: 16px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.addBtn:hover {
+  color: var(--color-text-primary);
+  background: var(--color-background-secondary);
+}
+
+/* ── 새 문서 입력 폼 ── */
+.newDocInput {
+  font-size: 13px;
+  padding: 6px 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.newDocForm {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: var(--color-background-secondary);
+  border-radius: 8px;
+}
+
+.newDocActions {
+  display: flex;
+  gap: 6px;
+}
+
+.newDocCreate {
+  flex: 1;
+  font-size: 12px;
+  padding: 5px 0;
+  cursor: pointer;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.newDocCreate:hover {
+  background: var(--color-accent-hover);
+}
+
+.newDocCancel {
+  flex: 1;
+  font-size: 12px;
+  padding: 5px 0;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.newDocCancel:hover {
+  background: var(--color-background-tertiary);
+}
+
+/* ── 문서 목록 아이템 ── */
+.docItem {
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.12s;
+}
+
+.docItem:hover {
+  background: var(--color-background-secondary);
+}
+
+.docItem.active {
+  background: var(--color-background-secondary);
+}
+
+.docItemTitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docItemTitle.active {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.docItemDate {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+.emptyText {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  padding: 0 4px;
+  margin: 0;
+}
+
+/* ── 에디터 영역 ── */
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* ── 툴바 ── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.toolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.saveStatus {
+  font-size: 12px;
+}
+
+.activeUsers {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.userAvatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-background-info);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-info);
+  border: 1.5px solid var(--color-background-primary);
+}
+
+.editingLabel {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.connectionStatus {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.connectionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.connectionDot.connected    { background: #639922; }
+.connectionDot.disconnected { background: #BA7517; }
+
+.connectionLabel {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.toolbarRight {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.newDocLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.createConfirmBtn {
+  font-size: 12px;
+  padding: 5px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-accent);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.createConfirmBtn:hover:not(:disabled) { background: var(--color-accent-hover); }
+.createConfirmBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.cancelCreateBtn {
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.cancelCreateBtn:hover { background: var(--color-background-secondary); }
+
+.newDocBtn {
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-accent);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.newDocBtn:hover {
+  background: var(--color-accent-hover);
+}
+
+.starBtn {
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.starBtn:hover { background: var(--color-background-secondary); color: #f59e0b; }
+
+.starBtn.starActive {
+  background: #fffbeb;
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.saveBtn {
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-background-secondary);
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: var(--color-background-tertiary);
+  color: var(--color-text-primary);
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.shareBtn {
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  background: none;
+  border: 1px solid var(--color-border-tertiary);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.shareBtn:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.shareBtn.shareActive {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.shareBtn.shareActive:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: #fff;
+}
+
+.commentBtn {
+  font-size: 12px;
+  padding: 5px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  background: none;
+  border: 1px solid var(--color-border-tertiary);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.commentBtn:hover {
+  background: var(--color-background-secondary);
+}
+
+.commentBtn.active {
+  background: var(--color-background-secondary);
+  border-color: var(--color-border-secondary);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--color-text-danger);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.deleteBtn:hover {
+  background: var(--color-background-danger);
+}
+
+/* ── 편집 영역 ── */
+.editorBody {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.editorMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editorTop {
+  padding: 32px 48px 0;
+}
+
+.titleInput {
+  width: 100%;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+
+.titleInput::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.tagsInput {
+  width: 100%;
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 16px;
+  font-family: inherit;
+}
+
+.tagsInput::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.divider {
+  height: 1px;
+  background: var(--color-border-tertiary);
+}
+
+.contentTextarea {
+  flex: 1;
+  margin: 0 48px;
+  padding: 20px 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-text-primary);
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: inherit;
+  overflow-y: auto;
+}
+
+/* ── 댓글 패널 ── */
+.commentPanel {
+  width: 300px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--color-border-tertiary);
+  background: var(--color-background-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 빈 화면 ── */
+.emptyEditor {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--color-text-tertiary);
+}
+
+.emptyEditorIcon {
+  font-size: 40px;
+  opacity: 0.4;
+}
+
+.emptyEditorText {
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+.emptyCreateBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.emptyCreateBtn:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}

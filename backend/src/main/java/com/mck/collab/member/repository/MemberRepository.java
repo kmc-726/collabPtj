@@ -1,5 +1,6 @@
 package com.mck.collab.member.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     boolean existsByUserId(String userId);
     Optional<Member> findByUserId(String userId);
     Optional<Member> findByEmail(String email);
+    List<Member> findByUserIdContainingOrNicknameContaining(String userId, String nickname);
 }
