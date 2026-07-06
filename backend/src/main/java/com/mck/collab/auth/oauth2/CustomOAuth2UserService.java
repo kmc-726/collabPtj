@@ -2,7 +2,9 @@ package com.mck.collab.auth.oauth2;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -14,38 +16,51 @@ import com.mck.collab.member.entity.Member;
 import com.mck.collab.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
-public class CustomOAuth2UserService extends DefaultOAuth2UserService{
-	
-	private final MemberRepository memberRepository;
-	
-	@Override
-	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException{
-		// 1. 구글에서 유저 정보 가져오기
+public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
-        // 2. 구글이 넘겨준 데이터 추출
-        String provider = userRequest.getClientRegistration().getRegistrationId(); // "google"
-        String providerId = (String) attributes.get("sub"); // 구글 고유 식별자
-        String email = (String) attributes.get("email");
-        String name = (String) attributes.get("name");
-        String picture = (String) attributes.get("picture");
+        String provider   = userRequest.getClientRegistration().getRegistrationId();
+        String providerId = (String) attributes.get("sub");
+        String email      = (String) attributes.get("email");
+        String name       = (String) attributes.get("name");
+        String picture    = (String) attributes.get("picture");
 
-        // 3. 우리 DB에 이메일로 가입된 유저가 있는지 확인
         Member member = memberRepository.findByEmail(email).orElse(null);
 
         if (member == null) {
-        	throw new OAuth2AuthenticationException("가입되지 않은 이메일입니다. 회원가입 후 연동해주세요.");
+            // 신규 구글 유저 → 자동 계정 생성
+            String baseUserId = email.split("@")[0].replaceAll("[^a-zA-Z0-9]", "");
+            String userId = generateUniqueUserId(baseUserId);
+            String nickname = (name != null && !name.isBlank()) ? name : baseUserId;
+
+            member = Member.builder()
+                    .email(email)
+                    .userId(userId)
+                    .password(passwordEncoder.encode(UUID.randomUUID().toString()))
+                    .nickname(nickname)
+                    .name(nickname)
+                    .phoneNumber("000-0000-0000")
+                    .provider(provider)
+                    .providerId(providerId)
+                    .profileImageUrl(picture)
+                    .build();
+            memberRepository.save(member);
         } else {
-            // 🌟 기존 연동 로직은 그대로 유지합니다.
+            // 기존 계정 → 구글 연동 및 프로필 업데이트
             if (member.getProvider() == null) {
                 member.setProvider(provider);
                 member.setProviderId(providerId);
-                System.out.println("기존 일반 계정이 구글 계정과 성공적으로 연동되었습니다! (이메일: " + email + ")");
             }
-            
             member.updateProfile(name, picture);
             memberRepository.save(member);
         }
@@ -55,6 +70,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService{
                 attributes,
                 "email"
         );
-	}
+    }
 
+    private String generateUniqueUserId(String base) {
+        String candidate = base;
+        int suffix = 1;
+        while (memberRepository.existsByUserId(candidate)) {
+            candidate = base + suffix++;
+        }
+        return candidate;
+    }
 }
